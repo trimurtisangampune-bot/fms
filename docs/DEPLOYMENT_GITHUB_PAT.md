@@ -277,10 +277,12 @@ echo "$GITHUB_PAT" | docker login ghcr.io -u "$GITHUB_USER" --password-stdin
 
 # Pull images (use commit SHA for reproducibility)
 COMMIT_SHA="a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6"
+docker pull ghcr.io/trimurtisangampune-bot/fms/db:$COMMIT_SHA
 docker pull ghcr.io/trimurtisangampune-bot/fms/backend:$COMMIT_SHA
 docker pull ghcr.io/trimurtisangampune-bot/fms/frontend:$COMMIT_SHA
 
 # Update .env with SHA
+sed -i "s|DB_IMAGE=.*|DB_IMAGE=ghcr.io/trimurtisangampune-bot/fms/db:$COMMIT_SHA|" .env
 sed -i "s|BACKEND_IMAGE=.*|BACKEND_IMAGE=ghcr.io/trimurtisangampune-bot/fms/backend:$COMMIT_SHA|" .env
 sed -i "s|FRONTEND_IMAGE=.*|FRONTEND_IMAGE=ghcr.io/trimurtisangampune-bot/fms/frontend:$COMMIT_SHA|" .env
 

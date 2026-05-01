@@ -1,0 +1,63 @@
+FMS DEPLOYMENT CHANGE TICKET
+============================
+
+Ticket ID: ______________________________
+Environment: ____________________________   (Production / Staging)
+Date: ___________________________________   (YYYY-MM-DD)
+
+Operator Name: __________________________
+Reviewed By: _____________________________
+
+Deployment Window Start: _________________
+Deployment Window End: ___________________
+
+Host / Server: ___________________________
+Deployment Path: _________________________   (/opt/fms or C:\\fms)
+
+Image SHAs Deployed
+-------------------
+DB_IMAGE:       ghcr.io/trimurtisangampune-bot/fms/db:________________________
+BACKEND_IMAGE:  ghcr.io/trimurtisangampune-bot/fms/backend:___________________
+FRONTEND_IMAGE: ghcr.io/trimurtisangampune-bot/fms/frontend:__________________
+
+Previous Known-Good SHAs (Rollback Target)
+------------------------------------------
+DB_IMAGE:       ghcr.io/trimurtisangampune-bot/fms/db:________________________
+BACKEND_IMAGE:  ghcr.io/trimurtisangampune-bot/fms/backend:___________________
+FRONTEND_IMAGE: ghcr.io/trimurtisangampune-bot/fms/frontend:__________________
+
+Pre-Deployment Checks
+---------------------
+[ ] GHCR login valid
+[ ] .env updated
+[ ] SECRET_KEY present
+[ ] DB_PASSWORD present
+[ ] ALLOWED_HOSTS verified
+
+Post-Deployment Verification
+----------------------------
+[ ] docker compose ps shows db/backend healthy
+[ ] Backend token endpoint returns 400 or 401
+[ ] Frontend endpoint returns 200
+[ ] No critical errors in backend/db logs
+
+Verification Evidence
+---------------------
+Backend HTTP Code: __________
+Frontend HTTP Code: _________
+
+Rollback Required?  [ ] No   [ ] Yes
+If Yes, Rollback Start Time: __________________
+If Yes, Rollback End Time: ____________________
+Rollback Outcome: _____________________________
+
+Final Status
+------------
+[ ] Successful Deployment
+[ ] Successful Rollback
+[ ] Failed - Escalated
+
+Notes:
+______________________________________________________________________________
+______________________________________________________________________________
+______________________________________________________________________________

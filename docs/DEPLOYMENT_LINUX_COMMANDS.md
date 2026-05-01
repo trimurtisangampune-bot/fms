@@ -136,8 +136,11 @@ TWILIO_SMS_FROM=
 TWILIO_WHATSAPP_FROM=
 
 REACT_APP_API_URL=https://fms.example.com/api
+DB_IMAGE=ghcr.io/trimurtisangampune-bot/fms/db:abc123def456
 BACKEND_IMAGE=ghcr.io/trimurtisangampune-bot/fms/backend:abc123def456
 FRONTEND_IMAGE=ghcr.io/trimurtisangampune-bot/fms/frontend:abc123def456
+GUNICORN_WORKERS=2
+GUNICORN_THREADS=2
 BACKEND_PORT=8000
 FRONTEND_PORT=80
 EOF
@@ -156,6 +159,9 @@ cat .env | head -20
 
 ### Pull images from GHCR:
 ```bash
+# Pull database image (replace commit SHA with your target tag)
+docker pull ghcr.io/trimurtisangampune-bot/fms/db:abc123def456
+
 # Pull backend image (replace commit SHA with your target tag)
 docker pull ghcr.io/trimurtisangampune-bot/fms/backend:abc123def456
 
@@ -169,6 +175,7 @@ docker images | grep trimurtisangampune-bot/fms
 ### Alternative: Use `latest` tag (NOT RECOMMENDED for production):
 ```bash
 # Not recommended—latest can change. Use commit SHAs instead.
+docker pull ghcr.io/trimurtisangampune-bot/fms/db:latest
 docker pull ghcr.io/trimurtisangampune-bot/fms/backend:latest
 docker pull ghcr.io/trimurtisangampune-bot/fms/frontend:latest
 ```

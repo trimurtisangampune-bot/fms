@@ -10,6 +10,19 @@ The deployment uses **immutable Docker images** from GitHub Container Registry (
 
 ## 📚 Documentation Files
 
+### **[DEPLOYMENT_ONE_PAGE_CHECKLIST.md](DEPLOYMENT_ONE_PAGE_CHECKLIST.md)** — FASTEST (Ops Runbook)
+**One-page deployment and rollback checklist for Linux and Windows.**
+
+- Pre-deployment validation
+- Pull and deploy commands
+- Health verification criteria
+- Fast rollback steps using previous SHA tags
+- Minimum required `.env` keys
+
+**Time to use:** 5-10 minutes per rollout
+
+---
+
 ### **[DEPLOYMENT_GITHUB_PAT.md](DEPLOYMENT_GITHUB_PAT.md)** — START HERE (Common to Both)
 **Read first if you haven't set up GitHub container registry access.**
 

@@ -80,6 +80,7 @@ docker run hello-world  # Should print "Hello from Docker!"
 cd C:\fms
 
 # Pull images
+docker pull ghcr.io/trimurtisangampune-bot/fms/db:abc123def456
 docker pull ghcr.io/trimurtisangampune-bot/fms/backend:abc123def456
 docker pull ghcr.io/trimurtisangampune-bot/fms/frontend:abc123def456
 
@@ -105,6 +106,7 @@ docker compose logs backend | tail -5   # Should show "Booting worker"
 ### Registry & Images
 ```
 Registry: ghcr.io/trimurtisangampune-bot/fms/
+Database: ghcr.io/trimurtisangampune-bot/fms/db:<commit-sha>
 Backend:  ghcr.io/trimurtisangampune-bot/fms/backend:<commit-sha>
 Frontend: ghcr.io/trimurtisangampune-bot/fms/frontend:<commit-sha>
 ```
@@ -153,6 +155,7 @@ docker compose exec -T db pg_dump -U fms_user fms_db > backup.sql
 Get-Content backup.sql | docker compose exec -T db psql -U fms_user fms_db
 
 # ===== UPDATES =====
+docker pull ghcr.io/trimurtisangampune-bot/fms/db:new-sha
 docker pull ghcr.io/trimurtisangampune-bot/fms/backend:new-sha
 docker pull ghcr.io/trimurtisangampune-bot/fms/frontend:new-sha
 docker compose up -d  # Restart with new images

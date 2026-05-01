@@ -208,8 +208,11 @@ TWILIO_SMS_FROM=
 TWILIO_WHATSAPP_FROM=
 
 REACT_APP_API_URL=https://fms.example.com/api
+DB_IMAGE=ghcr.io/trimurtisangampune-bot/fms/db:abc123def456
 BACKEND_IMAGE=ghcr.io/trimurtisangampune-bot/fms/backend:abc123def456
 FRONTEND_IMAGE=ghcr.io/trimurtisangampune-bot/fms/frontend:abc123def456
+GUNICORN_WORKERS=2
+GUNICORN_THREADS=2
 BACKEND_PORT=8000
 FRONTEND_PORT=80
 "@ | Out-File -FilePath .env -Encoding UTF8
@@ -229,6 +232,9 @@ type .env | head -20
 ### Pull Images:
 ```powershell
 cd C:\fms
+
+# Pull database image (use same SHA for consistency)
+docker pull ghcr.io/trimurtisangampune-bot/fms/db:abc123def456
 
 # Pull backend image (replace commit SHA with your target tag)
 docker pull ghcr.io/trimurtisangampune-bot/fms/backend:abc123def456
@@ -599,7 +605,12 @@ $SHA = (git rev-parse HEAD).Trim()
 # Login
 $GITHUB_PAT | docker login ghcr.io -u $GITHUB_USER --password-stdin
 
-# Build backend and frontend images with latest + SHA tags
+# Build db, backend and frontend images with latest + SHA tags
+docker build -f database/Dockerfile `
+  -t "$GHCR_REPO/db:latest" `
+  -t "$GHCR_REPO/db:$SHA" `
+  database
+
 docker build -f backend/Dockerfile `
   -t "$GHCR_REPO/backend:latest" `
   -t "$GHCR_REPO/backend:$SHA" `
@@ -612,18 +623,22 @@ docker build -f frontend/Dockerfile `
   frontend
 
 # Push all tags
+docker push "$GHCR_REPO/db:latest"
+docker push "$GHCR_REPO/db:$SHA"
 docker push "$GHCR_REPO/backend:latest"
 docker push "$GHCR_REPO/backend:$SHA"
 docker push "$GHCR_REPO/frontend:latest"
 docker push "$GHCR_REPO/frontend:$SHA"
 
 # Verify tags now exist
+docker manifest inspect "$GHCR_REPO/db:latest"
 docker manifest inspect "$GHCR_REPO/backend:latest"
 docker manifest inspect "$GHCR_REPO/frontend:latest"
 ```
 
 After manual publish, set SHA tags in `.env` (recommended for production):
 ```env
+DB_IMAGE=ghcr.io/trimurtisangampune-bot/fms/db:<full-40-char-sha>
 BACKEND_IMAGE=ghcr.io/trimurtisangampune-bot/fms/backend:<full-40-char-sha>
 FRONTEND_IMAGE=ghcr.io/trimurtisangampune-bot/fms/frontend:<full-40-char-sha>
 ```

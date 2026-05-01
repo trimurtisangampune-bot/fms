@@ -43,8 +43,9 @@ DB_USER=fms_user
 # Generate: openssl rand -base64 16
 DB_PASSWORD=<GENERATE_STRONG_PASSWORD>
 
-# Require SSL connections to database (recommended for production)
-DB_SSL_REQUIRE=True
+# For docker-compose internal db container, SSL is typically not enabled.
+# Set True only when using external managed Postgres that requires SSL.
+DB_SSL_REQUIRE=False
 
 # ===== SECURITY & HTTPS =====
 # CORS allowed origins (frontend URL). Use https:// for production.
@@ -100,10 +101,15 @@ TWILIO_WHATSAPP_FROM=
 # Examples:
 #   - ghcr.io/trimurtisangampune-bot/fms/backend:abc123def456... (specific commit)
 #   - ghcr.io/trimurtisangampune-bot/fms/backend:latest (rolling, not recommended for prod)
+DB_IMAGE=ghcr.io/trimurtisangampune-bot/fms/db:abc123def456
 BACKEND_IMAGE=ghcr.io/trimurtisangampune-bot/fms/backend:abc123def456
 
 # Frontend image tag (should match backend commit for consistency)
 FRONTEND_IMAGE=ghcr.io/trimurtisangampune-bot/fms/frontend:abc123def456
+
+# Optional gunicorn runtime tuning
+GUNICORN_WORKERS=2
+GUNICORN_THREADS=2
 
 # Backend service port (host binding)
 BACKEND_PORT=8000
@@ -177,8 +183,11 @@ TWILIO_SMS_FROM=
 TWILIO_WHATSAPP_FROM=
 
 REACT_APP_API_URL=https://fms.mycompany.com/api
+DB_IMAGE=ghcr.io/trimurtisangampune-bot/fms/db:a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6
 BACKEND_IMAGE=ghcr.io/trimurtisangampune-bot/fms/backend:a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6
 FRONTEND_IMAGE=ghcr.io/trimurtisangampune-bot/fms/frontend:a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6
+GUNICORN_WORKERS=2
+GUNICORN_THREADS=2
 BACKEND_PORT=8000
 FRONTEND_PORT=80
 ```
@@ -191,7 +200,7 @@ FRONTEND_PORT=80
 2. **DB_PASSWORD**: Use strong, randomly generated passwords. Never share via email or messaging.
 3. **ALLOWED_HOSTS**: Specify exact domains/IPs. Wildcards (`*`) reduce security.
 4. **SECURE_SSL_REDIRECT**: Only set to `True` if you have a valid SSL certificate (required by modern browsers).
-5. **IMAGE TAGS**: Use immutable commit SHA tags for production rollback capability.
+5. **IMAGE TAGS**: Use immutable commit SHA tags for DB, backend, and frontend images for production rollback capability.
 
 ---
 
@@ -221,6 +230,7 @@ TWILIO_SMS_FROM=
 TWILIO_WHATSAPP_FROM=
 
 REACT_APP_API_URL=http://localhost:8000/api
+DB_IMAGE=ghcr.io/trimurtisangampune-bot/fms/db:latest
 BACKEND_IMAGE=ghcr.io/trimurtisangampune-bot/fms/backend:latest
 FRONTEND_IMAGE=ghcr.io/trimurtisangampune-bot/fms/frontend:latest
 BACKEND_PORT=8000

@@ -120,6 +120,7 @@ jobs:
     needs: [backend-tests, frontend-build]
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     outputs:
+      db_tag: ${{ steps.meta_db.outputs.tags }}
       backend_tag: ${{ steps.meta_backend.outputs.tags }}
       frontend_tag: ${{ steps.meta_frontend.outputs.tags }}
     steps:
@@ -145,6 +146,15 @@ jobs:
             type=sha,prefix=,suffix=,format=long
             type=raw,value=latest
 
+      - name: Database image metadata
+        id: meta_db
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}/db
+          tags: |
+            type=sha,prefix=,suffix=,format=long
+            type=raw,value=latest
+
       - name: Frontend image metadata
         id: meta_frontend
         uses: docker/metadata-action@v5
@@ -160,6 +170,15 @@ jobs:
           context: ./backend
           push: true
           tags: ${{ steps.meta_backend.outputs.tags }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build and push database
+        uses: docker/build-push-action@v5
+        with:
+          context: ./database
+          push: true
+          tags: ${{ steps.meta_db.outputs.tags }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -196,6 +215,7 @@ jobs:
             cd ${{ secrets.APP_DIR }}
 
             export IMAGE_TAG="${{ github.sha }}"
+            export DB_IMAGE="ghcr.io/${{ github.repository }}/db:${IMAGE_TAG}"
             export BACKEND_IMAGE="ghcr.io/${{ github.repository }}/backend:${IMAGE_TAG}"
             export FRONTEND_IMAGE="ghcr.io/${{ github.repository }}/frontend:${IMAGE_TAG}"
 
@@ -203,6 +223,7 @@ jobs:
             echo "${{ secrets.GITHUB_TOKEN }}" | \
               docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
+            docker pull "$DB_IMAGE"
             docker pull "$BACKEND_IMAGE"
             docker pull "$FRONTEND_IMAGE"
 
