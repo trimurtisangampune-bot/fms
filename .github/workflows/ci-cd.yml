@@ -100,7 +100,16 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          for attempt in 1 2 3; do
+            npm ci && break
+            if [ "$attempt" -eq 3 ]; then
+              echo "npm ci failed after 3 attempts"
+              exit 1
+            fi
+            echo "npm ci failed, retrying in 10 seconds..."
+            sleep 10
+          done
 
       - name: Build frontend
         env:

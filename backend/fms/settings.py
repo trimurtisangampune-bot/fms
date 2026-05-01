@@ -73,11 +73,14 @@ WSGI_APPLICATION = 'fms.wsgi.application'
 
 DATABASE_URL = os.getenv('DATABASE_URL', '').strip()
 if DATABASE_URL and dj_database_url:
+    database_parse_kwargs = {'conn_max_age': 600}
+    if DATABASE_URL.startswith(('postgres://', 'postgresql://')):
+        database_parse_kwargs['ssl_require'] = env_bool('DB_SSL_REQUIRE', not DEBUG)
+
     DATABASES = {
         'default': dj_database_url.parse(
             DATABASE_URL,
-            conn_max_age=600,
-            ssl_require=env_bool('DB_SSL_REQUIRE', not DEBUG),
+            **database_parse_kwargs,
         )
     }
 else:
