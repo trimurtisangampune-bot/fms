@@ -1,0 +1,39 @@
+### Backend
+
+Module/service structure:
+
+- `AuthService`
+- `UserService`
+- `UnitService`
+- `MemberService`
+- `BillingService`
+- `InvoiceService`
+- `PaymentService`
+- `ExpenseService`
+- `BudgetService`
+- `FundService`
+- `ReportService`
+- `NotificationService`
+- `AuditService`
+
+Data access:
+
+- `UserRepository`
+- `UnitRepository`
+- `MemberRepository`
+- `InvoiceRepository`
+- `PaymentRepository`
+- `ExpenseRepository`
+- `BudgetRepository`
+- `AuditLogRepository`
+
+Domain/logic classes:
+
+- `InvoiceCalculator`
+- `PaymentAllocator`
+- `PenaltyCalculator`
+- `BudgetVarianceCalculator`
+- `ReceivableAggregator`
+- `PayableAggregator`
+
+---

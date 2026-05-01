@@ -1,0 +1,27 @@
+### BillingService responsibilities
+
+- validate billing period and units
+- load applicable templates and charges
+- build invoice lines
+- persist `Invoice` + `InvoiceLine`
+- optionally generate PDF/print output
+- log audit entry
+
+### PaymentService responsibilities
+
+- validate payment metadata
+- allocate amount across targets
+- update invoice balance and arrears
+- record allocations
+- wrap all updates in a database transaction
+- emit audit record
+
+### ExpenseService responsibilities
+
+- create/edit expense records
+- manage approval workflow
+- update payable/fund balances
+- attach supporting documents
+- notify approvers if needed
+
+---

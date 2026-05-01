@@ -1,0 +1,9 @@
+## Recommended Design Patterns
+
+- Domain-driven service layer
+- Repository / ORM model layer
+- DTOs for input/output
+- Validation on API boundaries
+- Database transactions for financial updates
+- Audit logging middleware/interceptor
+- Role-based authorization guard

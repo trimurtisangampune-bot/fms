@@ -1,0 +1,154 @@
+## Requirement Specification: Residential Cooperative Housing Society Finance
+
+### 1. Purpose
+Support tracking and management of:
+- recurring maintenance income from residents
+- all society expenses
+- payment status, balances, and financial reports
+
+---
+
+## 2. Actors
+- `Admin` / `Society Secretary`
+- `Treasurer` / `Accountant`
+- `Resident` / `Member`
+- `Board Member`
+- `Auditor`
+
+---
+
+## 3. Core Functional Requirements
+
+### 3.1 Unit / Member Management
+- Maintain a register of flats/units with:
+  - unit number
+  - owner name
+  - occupant type (owner/tenant)
+  - membership status
+- Track member contact details and bank/payment preferences
+- Manage multiple occupants or joint owners
+
+### 3.2 Maintenance Income Management
+- Define maintenance charges:
+  - monthly/quarterly/annual frequency
+  - amount per unit or calculated by area/flat type
+  - additional levies (sinking fund, repair fund, water, electricity)
+- Generate maintenance invoices automatically
+- Apply late fees / interest for overdue payments
+- Record payments:
+  - mode: cash, cheque, online transfer, UPI, bank deposit
+  - date, amount, reference number
+- Auto-allocate payments to:
+  - current maintenance
+  - arrears
+  - penalty
+  - special fund
+- Show member ledger with:
+  - total due
+  - amount paid
+  - balance
+  - historical payments
+
+### 3.3 Expense Tracking
+- Create expense categories:
+  - repairs/maintenance
+  - salaries
+  - utilities
+  - property tax
+  - insurance
+  - administrative
+- Record expense entries with:
+  - date, amount, vendor/supplier
+  - expense category
+  - payment status (paid/unpaid)
+  - approval status
+  - supporting documents
+- Support recurring expenses and approvals
+- Maintain vendor/supplier master data
+
+### 3.4 Budgeting and Forecasting
+- Define annual budgets by category
+- Compare actual expenses vs budget
+- Forecast cash flow for upcoming periods
+- Track reserve/sinking fund balances
+
+### 3.5 Receivables and Payables
+- Maintain incoming maintenance receivables
+- Track outstanding dues by member/unit
+- Generate collection status reports
+- Track payable expenses and vendor due dates
+
+### 3.6 Reporting and Dashboards
+- Dashboard with:
+  - total maintenance collected
+  - current arrears
+  - upcoming due invoices
+  - recent expenses
+  - fund balances
+- Standard reports:
+  - monthly maintenance collection
+  - expenses by category
+  - profit & loss / cash flow
+  - arrears statement
+  - unit-wise outstanding
+  - bank reconciliation
+- Export reports to PDF / Excel
+
+### 3.7 Notifications and Communication
+- Send reminders for due/overdue maintenance
+- Issue payment receipts
+- Notify residents of new charges or society notices
+
+### 3.8 Audit and History
+- Keep audit trail of:
+  - transaction creation
+  - edits
+  - approvals
+  - payments
+- Record user ID, timestamp, action details
+
+---
+
+## 4. Non-Functional Requirements
+
+### 4.1 Accuracy
+- Ensure financial calculations are precise
+- Validate payment amounts and dates
+
+### 4.2 Security
+- Role-based access control
+- Secure login and password management
+- Data confidentiality for member financial records
+
+### 4.3 Reliability
+- Data backup and restore
+- Transaction safety and consistency
+
+### 4.4 Usability
+- Simple entry forms for expenses and payments
+- Clear status indicators for dues and arrears
+- Easy search/filter for units, invoices, expenses
+
+### 4.5 Compliance
+- Support statutory requirements for cooperative societies
+- Maintain records suitable for audit
+
+---
+
+## 5. Optional Enhancements
+- Mobile app / responsive web portal for residents
+- Online payment integration
+- SMS / email payment reminders
+- Multi-society support in one system
+- Multi-currency support if needed
+
+---
+
+## 6. Minimum Data Elements
+- Member: name, flat, contact, membership number
+- Invoice: period, amount, due date, status
+- Payment: date, amount, mode, reference
+- Expense: category, vendor, amount, date, approval
+- Fund: maintenance, reserve, sinking, contingency
+
+If you want, I can also turn this into a formal Software Requirements Specification (SRS) document with numbered sections and acceptance criteria.

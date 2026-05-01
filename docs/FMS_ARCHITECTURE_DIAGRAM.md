@@ -1,0 +1,82 @@
+# FMS Architecture Diagram
+
+This file contains the architecture diagram for the FMS application.
+
+```mermaid
+flowchart TB
+    %% Users and entry points
+    User[Users<br/>Admin, Treasurer, Auditor, Member]
+    Browser[Web Browser]
+
+    %% Frontend
+    subgraph FE[Frontend Layer - React 18 / CRA / Nginx]
+        ReactApp[React SPA<br/>components, routes, auth context]
+        Axios[Axios API Client<br/>JWT interceptors]
+        NginxFE[Nginx Container<br/>serves static build + /api proxy]
+    end
+
+    %% Backend
+    subgraph BE[Backend Layer - Django 6 + DRF + JWT + Gunicorn]
+        DjangoAPI[Django REST API<br/>units, members, billing, users]
+        Auth[SimpleJWT Auth<br/>token + refresh endpoints]
+        Services[Service Layer<br/>business rules, workflows]
+        Perms[Permissions / RBAC<br/>role-based access control]
+        Static[WhiteNoise Static Files]
+        Gunicorn[Gunicorn WSGI]
+    end
+
+    %% Database
+    subgraph DB[Data Layer]
+        Postgres[(PostgreSQL)]
+    end
+
+    %% CI/CD
+    subgraph CICD[CI/CD - GitHub Actions]
+        Source[GitHub Repository]
+        BQ[Backend Quality<br/>check --deploy + migration check]
+        BT[Backend Tests]
+        FB[Frontend Build]
+        DBuild[Docker Build & Push<br/>backend + frontend images]
+        GHCR[GHCR Image Registry]
+        Deploy[Deploy Job via SSH]
+    end
+
+    %% Runtime deployment
+    subgraph PROD[Production Runtime - Docker Compose]
+        Compose[docker compose]
+        FECont[frontend container<br/>nginx + static assets]
+        BECont[backend container<br/>gunicorn + django]
+        DBCont[db container<br/>postgres]
+    end
+
+    %% Request flow
+    User --> Browser
+    Browser --> ReactApp
+    ReactApp --> Axios
+    Axios -->|HTTPS /api/*| NginxFE
+    NginxFE -->|proxy /api/*| Gunicorn
+    Gunicorn --> DjangoAPI
+    DjangoAPI --> Auth
+    DjangoAPI --> Services
+    DjangoAPI --> Perms
+    DjangoAPI --> Static
+    Services --> Postgres
+    DjangoAPI --> Postgres
+
+    %% CI/CD flow
+    Source --> BQ --> BT --> FB --> DBuild --> GHCR --> Deploy
+
+    %% Deploy/runtime flow
+    Deploy --> Compose
+    GHCR --> Compose
+    Compose --> FECont
+    Compose --> BECont
+    Compose --> DBCont
+    FECont -->|/api proxy| BECont
+    BECont --> DBCont
+
+    %% Cross-links for clarity
+    NginxFE -. production container .-> FECont
+    Gunicorn -. production container .-> BECont
+    Postgres -. persistent data .-> DBCont
+```

@@ -1,0 +1,60 @@
+## Sample Database Schema
+
+### Core tables
+
+- `users`
+  - `id`, `name`, `email`, `password_hash`, `role_id`, `is_active`, `created_at`, `updated_at`
+- `roles`
+  - `id`, `name` (`admin`, `treasurer`, `auditor`, `member`)
+- `permissions`
+  - `id`, `name`, `description`
+- `role_permissions`
+  - `role_id`, `permission_id`
+
+- `units`
+  - `id`, `unit_number`, `block`, `floor`, `area_sqft`, `unit_type`, `status`
+- `members`
+  - `id`, `unit_id`, `owner_name`, `occupant_type`, `membership_status`, `contact_phone`, `contact_email`, `payment_preference`, `bank_account`
+
+### Billing / invoice tables
+
+- `invoice_templates`
+  - `id`, `name`, `billing_frequency`, `flat_rate`, `area_rate`, `sinking_fund`, `repair_fund`, `water_charge`, `electricity_charge`
+- `invoices`
+  - `id`, `unit_id`, `member_id`, `period_start`, `period_end`, `issue_date`, `due_date`, `status`, `subtotal`, `tax_amount`, `penalty_amount`, `total_amount`
+- `invoice_lines`
+  - `id`, `invoice_id`, `line_type`, `description`, `amount`
+
+### Payment and allocation
+
+- `payments`
+  - `id`, `invoice_id`, `member_id`, `payment_date`, `amount`, `mode`, `reference_number`, `received_by`, `notes`
+- `payment_allocations`
+  - `id`, `payment_id`, `target_type` (`current`, `arrears`, `penalty`, `fund`), `target_id`, `amount`
+
+### Expense / budget / fund
+
+- `expenses`
+  - `id`, `expense_date`, `amount`, `category`, `vendor_name`, `vendor_contact`, `description`, `approval_status`, `payment_status`, `paid_date`, `attachment_url`
+- `expense_approvals`
+  - `id`, `expense_id`, `approved_by`, `approved_at`, `comments`
+- `budgets`
+  - `id`, `year`, `category`, `budget_amount`, `approved_by`, `approved_at`
+- `funds`
+  - `id`, `name`, `type` (`maintenance`, `reserve`, `sinking`, `contingency`), `balance`, `description`
+
+### Audit and reporting
+
+- `audit_logs`
+  - `id`, `entity_type`, `entity_id`, `action`, `changed_by`, `changed_at`, `before_data`, `after_data`
+- `notifications`
+  - `id`, `recipient_type`, `recipient_id`, `type`, `subject`, `body`, `sent_at`, `status`
+
+### Computed views
+
+- `receivables_view`
+  - invoice-level outstanding amounts
+- `payables_view`
+  - unpaid expense totals and due dates
+
+---

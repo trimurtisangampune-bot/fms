@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.sqlite3
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# Django static/media artifacts (keep .gitkeep so CI can collectstatic)
+backend/staticfiles/*
+!backend/staticfiles/.gitkeep
+backend/media/
+
+# Environment files
+.env
+.env.*
+!.env.example
+!backend/.env.example
+!frontend/.env.production.example
+
+# Node
+frontend/node_modules/
+frontend/build/
+
+# Logs
+*.log
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

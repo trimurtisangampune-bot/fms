@@ -1,0 +1,38 @@
+### Frontend
+
+Pages/components:
+
+- `LoginPage`
+- `DashboardPage`
+- `UnitsPage`
+- `MembersPage`
+- `BillingPage`
+- `InvoiceDetail`
+- `PaymentsPage`
+- `PaymentForm`
+- `ExpensesPage`
+- `ExpenseForm`
+- `BudgetPage`
+- `ReportsPage`
+- `NotificationsPage`
+- `AuditTrailPage`
+
+Shared components:
+
+- `DataTable`
+- `FilterPanel`
+- `SummaryCard`
+- `ModalDialog`
+- `DateRangePicker`
+- `ExportButtons`
+
+Service layer:
+
+- `apiClient`
+- `unitService`
+- `memberService`
+- `billingService`
+- `paymentService`
+- `expenseService`
+- `budgetService`
+- `reportService`

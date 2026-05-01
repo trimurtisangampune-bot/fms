@@ -1,0 +1,11 @@
+unit_number,owner_name,occupant_type,contact_phone,contact_email,membership_status,payment_preference
+A-101,John Doe,Owner,9876543210,john.doe@example.com,Active,Online
+A-102,Jane Smith,Tenant,9123456780,jane.smith@example.com,Active,Cash
+B-201,Michael Lee,Owner,9988776655,michael.lee@example.com,Inactive,Cheque
+B-202,Susan Park,Tenant,9765432109,susan.park@example.com,Active,Online
+C-101,David Kumar,Owner,9845623710,david.kumar@example.com,Active,Online
+C-102,Emma Wilson,Tenant,9678412350,emma.wilson@example.com,Vacant,Cash
+D-201,Robert Brown,Owner,9911223344,robert.brown@example.com,Active,Online
+D-202,Alice Johnson,Tenant,9786432105,alice.johnson@example.com,Inactive,Cheque
+E-101,Chris Martin,Owner,9801234567,chris.martin@example.com,Active,Online
+E-102,Olivia Davis,Tenant,9709876543,olivia.davis@example.com,Active,Cash

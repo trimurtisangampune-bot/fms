@@ -1,0 +1,15 @@
+unit_number,block,floor,area_sqft,unit_type,status
+A-101,A,1,850.50,Flat,Active
+A-102,A,1,875.25,Flat,Vacant
+A-201,A,2,850.50,Flat,Active
+A-202,A,2,875.25,Flat,Active
+B-101,B,1,920.75,Flat,Active
+B-102,B,1,945.30,Flat,Vacant
+B-201,B,2,920.75,Flat,Active
+B-202,B,2,945.30,Flat,Active
+C-101,C,1,780.00,Flat,Active
+C-102,C,1,805.50,Flat,Vacant
+SHOP-01,Ground,0,250.00,Shop,Active
+SHOP-02,Ground,0,275.50,Shop,Vacant
+PARK-001,Ground,0,150.00,Parking,Active
+PARK-002,Ground,0,150.00,Parking,Vacant

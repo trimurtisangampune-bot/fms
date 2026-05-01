@@ -1,0 +1,113 @@
+## REST API Design
+
+### Authentication
+
+- `POST /api/auth/login`
+- `POST /api/auth/logout`
+- `GET /api/auth/me`
+
+### Units & members
+
+- `GET /api/units`
+- `POST /api/units`
+- `PUT /api/units/{id}`
+- `DELETE /api/units/{id}`
+
+- `GET /api/members`
+- `POST /api/members`
+- `PUT /api/members/{id}`
+- `DELETE /api/members/{id}`
+
+### Invoices and billing
+
+- `GET /api/invoices`
+- `GET /api/invoices/{id}`
+- `POST /api/invoices`
+- `PUT /api/invoices/{id}`
+- `POST /api/invoices/generate`
+  - payload: billing period, unit list, template id
+- `POST /api/invoices/{id}/apply-penalty`
+
+### Payments
+
+- `GET /api/payments`
+- `GET /api/payments/{id}`
+- `POST /api/payments`
+- `POST /api/payments/{id}/allocate`
+- `GET /api/members/{id}/ledger`
+
+### Expenses
+
+- `GET /api/expenses`
+- `POST /api/expenses`
+- `PUT /api/expenses/{id}`
+- `POST /api/expenses/{id}/approve`
+- `POST /api/expenses/{id}/mark-paid`
+
+### Budgets
+
+- `GET /api/budgets`
+- `POST /api/budgets`
+- `PUT /api/budgets/{id}`
+
+### Reports / dashboards
+
+- `GET /api/reports/collection-summary`
+- `GET /api/reports/expense-by-category`
+- `GET /api/reports/arrears`
+- `GET /api/reports/unit-outstanding`
+- `GET /api/reports/cashflow`
+- `GET /api/reports/bank-reconciliation`
+
+### Notifications
+
+- `GET /api/notifications`
+- `POST /api/notifications/send`
+- `GET /api/notifications/settings`
+
+---
+
+## Example API Payloads
+
+### Create invoice generation request
+
+`POST /api/invoices/generate`
+
+```json
+{
+  "billing_period": { "start": "2026-05-01", "end": "2026-05-31" },
+  "unit_ids": [10, 11, 12],
+  "template_id": 2,
+  "include_penalties": false
+}
+```
+
+### Record payment
+
+`POST /api/payments`
+
+```json
+{
+  "invoice_id": 45,
+  "member_id": 7,
+  "payment_date": "2026-05-12",
+  "amount": 11250.00,
+  "mode": "UPI",
+  "reference_number": "TXN7890",
+  "allocations": [
+    { "target_type": "current", "amount": 9500.00 },
+    { "target_type": "penalty", "amount": 1750.00 }
+  ]
+}
+```
+
+### Approve expense
+
+`POST /api/expenses/32/approve`
+
+```json
+{
+  "approved_by": 3,
+  "comments": "Approved for May repair work"
+}
+```
