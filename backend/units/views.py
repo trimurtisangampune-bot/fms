@@ -13,6 +13,7 @@ from django.db.models import Q
 from django.db import transaction
 
 from .models import Unit, Member, Occupant, AuditLog, MaintenanceTemplate, Invoice, Payment, PaymentCommunicationLog, InvoiceDeletionApprovalTask, InvoiceCancellationApprovalTask
+from .models import UserProfile
 from .serializers import (
     UnitSerializer, UnitDetailSerializer, MemberSerializer, MemberListSerializer,
     MemberDetailSerializer, OccupantSerializer, AuditLogSerializer,
@@ -1116,5 +1117,6 @@ class UserViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated], url_path='me')
     def me(self, request):
+        UserProfile.objects.get_or_create(user=request.user)
         serializer = self.get_serializer(request.user)
         return Response(serializer.data)
